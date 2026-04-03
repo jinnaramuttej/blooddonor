@@ -19,12 +19,20 @@
             <span class="link-text">Oasis</span>
         </a>
         <div class="profile">
-            {% if session.user_id %}
-                <a href="{{ url_for('my_profile_page') }}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; width: 100%;">
-                    <img src="{{ session.get('profile_pic_url', url_for('static', filename='images/default-avatar.png')) }}" alt="User profile picture" class="profile-img" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/default-avatar.png') }}';">
+            {% if session.get('is_admin') %}
+                <a href="{{ url_for('admin_dashboard') }}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; width: 100%;">
+                    <img src="{{ url_for('static', filename=default_avatar) }}" alt="Admin avatar" class="profile-img">
+                    <div class="profile-info">
+                        <h4 class="profile-name">{{ session.admin_name }}</h4>
+                        <p class="profile-detail">Admin Dashboard / Logout</p>
+                    </div>
+                </a>
+            {% elif session.user_id %}
+                <a href="{{ url_for('dashboard_page') }}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; width: 100%;">
+                    <img src="{{ url_for('static', filename=session.get('profile_pic_url')) if session.get('profile_pic_url') else url_for('static', filename=default_avatar) }}" alt="User profile picture" class="profile-img" onerror="this.onerror=null;this.src='{{ url_for('static', filename=default_avatar) }}';">
                     <div class="profile-info">
                         <h4 class="profile-name">{{ session.username }}</h4>
-                        <p class="profile-detail">View Profile / Logout</p>
+                        <p class="profile-detail">Dashboard / Logout</p>
                     </div>
                 </a>
             {% else %}
@@ -39,6 +47,7 @@
         <ul class="sidebar-nav">
             <li><a href="{{ url_for('home') }}" class="{{ 'active' if request.endpoint == 'home' else '' }}"><i class="fas fa-home" aria-hidden="true"></i><span class="link-text">Home</span></a></li>
             {% if session.user_id %}
+            <li><a href="{{ url_for('dashboard_page') }}" class="{{ 'active' if request.endpoint == 'dashboard_page' else '' }}"><i class="fas fa-chart-pie" aria-hidden="true"></i><span class="link-text">Dashboard</span></a></li>
             <li><a href="{{ url_for('inbox_page') }}" class="{{ 'active' if 'inbox' in request.endpoint or 'conversation' in request.endpoint else '' }}"><i class="fas fa-inbox"></i><span class="link-text">Inbox</span> {% if unread_count > 0 %}<span class="notification-badge">{{ unread_count }}</span>{% endif %}</a></li>
             {% endif %}
             <li><a href="{{ url_for('get_involved_page') }}" class="{{ 'active' if request.endpoint == 'get_involved_page' else '' }}"><i class="fas fa-hands-helping" aria-hidden="true"></i><span class="link-text">Get Involved</span></a></li>
@@ -47,6 +56,10 @@
             <li><a href="{{ url_for('blood_drives_page') }}" class="{{ 'active' if request.endpoint == 'blood_drives_page' else '' }}"><i class="fas fa-map-marked-alt"></i><span class="link-text">Blood Drives</span></a></li>
             {% endif %}
             <li><a href="{{ url_for('leaderboard_page') }}" class="{{ 'active' if request.endpoint == 'leaderboard_page' else '' }}"><i class="fas fa-trophy" aria-hidden="true"></i><span class="link-text">Leaderboard</span></a></li>
+            {% if session.get('is_admin') %}
+            <li><a href="{{ url_for('admin_dashboard') }}" class="{{ 'active' if request.endpoint == 'admin_dashboard' else '' }}"><i class="fas fa-user-shield" aria-hidden="true"></i><span class="link-text">Admin</span></a></li>
+            <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt" aria-hidden="true"></i><span class="link-text">Logout</span></a></li>
+            {% endif %}
         </ul>
         <div class="sidebar-footer">
             <div class="dark-mode-toggle">
@@ -70,9 +83,13 @@
                     <a href="{{ url_for('get_involved_page') }}" class="{{ 'active' if request.endpoint == 'get_involved_page' else '' }}">Get Involved</a>
                     <a href="{{ url_for('search_donors_page') }}" class="{{ 'active' if request.endpoint == 'search_donors_page' else '' }}">Find a Donor</a>
                     {% if session.user_id %}
+                    <a href="{{ url_for('dashboard_page') }}" class="{{ 'active' if request.endpoint == 'dashboard_page' else '' }}">Dashboard</a>
                     <a href="{{ url_for('inbox_page') }}" class="{{ 'active' if 'inbox' in request.endpoint else '' }}">Inbox {% if unread_count > 0 %}<span class="notification-badge">{{ unread_count }}</span>{% endif %}</a>
                     {% else %}
                     <a href="{{ url_for('blood_drives_page') }}" class="{{ 'active' if request.endpoint == 'blood_drives_page' else '' }}">Blood Drives</a>
+                    {% endif %}
+                    {% if session.get('is_admin') %}
+                    <a href="{{ url_for('admin_dashboard') }}" class="{{ 'active' if request.endpoint == 'admin_dashboard' else '' }}">Admin</a>
                     {% endif %}
                     <a href="{{ url_for('leaderboard_page') }}" class="icon-link {{ 'active' if request.endpoint == 'leaderboard_page' else '' }}" aria-label="Leaderboard"><i class="fas fa-trophy"></i></a>
                 </nav>
@@ -85,6 +102,7 @@
         <nav class="nav-links">
             <a href="{{ url_for('home') }}">Home</a>
             {% if session.user_id %}
+            <a href="{{ url_for('dashboard_page') }}">Dashboard</a>
             <a href="{{ url_for('inbox_page') }}">Inbox</a>
             {% endif %}
             <a href="{{ url_for('get_involved_page') }}">Get Involved</a>
@@ -93,10 +111,10 @@
             {% endif %}
             <a href="{{ url_for('search_donors_page') }}">Find Donors</a>
             <a href="{{ url_for('leaderboard_page') }}">Leaderboard</a>
-            <a href="{{ url_for('admin_login_page') }}" class="admin-link">Admin Portal</a>
+            <a href="{{ url_for('admin_dashboard') if session.get('is_admin') else url_for('admin_login_page') }}" class="admin-link">Admin Portal</a>
             <a href="{{ url_for('faqs_page') }}">FAQs</a>
             <a href="{{ url_for('emergency_request_page') }}" class="cta-button">Emergency Request</a>
-            {% if session.user_id %}
+            {% if session.user_id or session.get('is_admin') %}
             <a href="{{ url_for('logout') }}" class="cta-button" style="background: var(--gray-600);">Logout</a>
             {% endif %}
         </nav>
@@ -148,7 +166,7 @@
                     <ul class="footer-links">
                         <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Terms of Service</a></li>
-                        <li><a href="{{ url_for('admin_login_page') }}">Admin Portal</a></li>
+                        <li><a href="{{ url_for('admin_dashboard') if session.get('is_admin') else url_for('admin_login_page') }}">Admin Portal</a></li>
                     </ul>
                 </div>
             </div>

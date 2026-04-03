@@ -1,0 +1,253 @@
+{
+  "admins": [
+    {
+      "admin_id": 1,
+      "name": "Oasis Admin",
+      "email": "jinnaramuttej@gmail.com",
+      "password": "scrypt:32768:8:1$kvHBXBLlTOQ8Qjrl$8d944791691fac53b91713df72714a67d1216c2dac3e8060ca9dc30920fd8b9e711b0058ebf2f7916c76afe9a1deeb2c2c889e1c8b48fbdf3c0115cf3a7b8bda",
+      "last_login": "2026-04-03T12:56:38"
+    }
+  ],
+  "profiles": [
+    {
+      "user_id": 1,
+      "username": "Aarav Mehta",
+      "email": "aarav@oasis.local",
+      "password": "scrypt:32768:8:1$YbFrgXjZA4PqDLva$b4fca3219dbc9130e1f7094bda9338ede448af12fecc7293337e018a84e0e17598d15bb7275b9c8bb83696b80323311c8f947af53e33b8f23d466b44fafa2be8",
+      "created_at": "2026-03-01T09:00:00",
+      "last_response": "2026-03-29T11:40:00"
+    },
+    {
+      "user_id": 2,
+      "username": "Priya Sharma",
+      "email": "priya@oasis.local",
+      "password": "scrypt:32768:8:1$N2TczEsAa7oUb69g$e50e168901c023d168d1074e62b4c008a7042dff58388c1aa157be14235e1f56c1f1aa84b4c114cf1a920720212bbeb5192affa9e7e09d6204b2a67ca01e106c",
+      "created_at": "2026-03-03T10:15:00",
+      "last_response": "2026-03-30T18:10:00"
+    },
+    {
+      "user_id": 3,
+      "username": "Rohan Patel",
+      "email": "rohan@oasis.local",
+      "password": "scrypt:32768:8:1$LMIo2Wx19nozSeNJ$2b3f681dd70f001b14e7f8fc0acfc14a9fecfc60af893e51374d149efb86652321d93117c81508c7f59c230bae342a8957f5fba292bb0f38e0e6339ea0057b6b",
+      "created_at": "2026-03-05T13:25:00",
+      "last_response": null
+    },
+    {
+      "user_id": 4,
+      "username": "Sara Khan",
+      "email": "sara@oasis.local",
+      "password": "scrypt:32768:8:1$k2zPmtJpkdHGLURP$752d02204473c259bfda968a51eb2aae2f2562c00bd83605556ff28db7178cd459effbbd2d03a7e79d76c168415e2f8baabdf1cba9ea63218b9c7ae9f6606649",
+      "created_at": "2026-03-07T16:45:00",
+      "last_response": "2026-03-31T09:05:00"
+    },
+    {
+      "user_id": 5,
+      "username": "Jinnaram Uttej",
+      "email": "jinnaramuttej@gmail.com",
+      "password": "scrypt:32768:8:1$SHNkSuuS2NmEWjgO$6e212fd4e256a2687cd115b7a736ab73572dc260caa88c57347c819b2474aa21bbf28a043e5cc34a8ef181874ec3e223ef8d2ad8c8280e30d9db4268524e0b3f",
+      "created_at": "2026-04-03T12:52:24",
+      "last_response": null
+    }
+  ],
+  "donors": [
+    {
+      "donor_id": 1,
+      "profile_id": 1,
+      "name": "Aarav Mehta",
+      "dob": "1993-05-12",
+      "gender": "Male",
+      "contact": "9876543210",
+      "pincode": "560001",
+      "blood_group": "O+",
+      "profile_picture_url": null,
+      "verified": true,
+      "status": "active"
+    },
+    {
+      "donor_id": 2,
+      "profile_id": 2,
+      "name": "Priya Sharma",
+      "dob": "1995-11-21",
+      "gender": "Female",
+      "contact": "9123456780",
+      "pincode": "560001",
+      "blood_group": "A+",
+      "profile_picture_url": "uploads/profile_pics/user_2_pfp.jpg",
+      "verified": true,
+      "status": "active"
+    },
+    {
+      "donor_id": 3,
+      "profile_id": 3,
+      "name": "Rohan Patel",
+      "dob": "1990-01-09",
+      "gender": "Male",
+      "contact": "9988776655",
+      "pincode": "560034",
+      "blood_group": "B+",
+      "profile_picture_url": null,
+      "verified": false,
+      "status": "pending"
+    },
+    {
+      "donor_id": 4,
+      "profile_id": 4,
+      "name": "Sara Khan",
+      "dob": "1998-08-03",
+      "gender": "Female",
+      "contact": "9090909090",
+      "pincode": "560078",
+      "blood_group": "AB-",
+      "profile_picture_url": null,
+      "verified": true,
+      "status": "active"
+    },
+    {
+      "donor_id": 5,
+      "profile_id": 5,
+      "name": "Jinnaram Uttej",
+      "dob": "2026-04-09",
+      "gender": "Male",
+      "contact": "9490234112",
+      "pincode": "500018",
+      "blood_group": "AB-",
+      "profile_picture_url": null,
+      "verified": false,
+      "status": "pending"
+    }
+  ],
+  "donations": [
+    {
+      "donation_id": 1,
+      "donor_id": 1,
+      "donation_date": "2026-01-14",
+      "location": "Manipal Hospital",
+      "units": 1
+    },
+    {
+      "donation_id": 2,
+      "donor_id": 1,
+      "donation_date": "2026-02-20",
+      "location": "Red Cross Camp",
+      "units": 1
+    },
+    {
+      "donation_id": 3,
+      "donor_id": 1,
+      "donation_date": "2026-03-22",
+      "location": "City Care Drive",
+      "units": 1
+    },
+    {
+      "donation_id": 4,
+      "donor_id": 2,
+      "donation_date": "2026-01-28",
+      "location": "Apollo Outreach",
+      "units": 1
+    },
+    {
+      "donation_id": 5,
+      "donor_id": 2,
+      "donation_date": "2026-03-10",
+      "location": "Red Cross Camp",
+      "units": 1
+    },
+    {
+      "donation_id": 6,
+      "donor_id": 4,
+      "donation_date": "2026-02-05",
+      "location": "Community Health Center",
+      "units": 1
+    }
+  ],
+  "messages": [
+    {
+      "message_id": 1,
+      "sender_id": 1,
+      "receiver_id": 2,
+      "subject": "Blood Request for A+",
+      "body": "Patient Name: Meera Joshi\nRequired Units: 2\nHospital: City General Hospital\nContact: 9988001122\nReason: Scheduled surgery",
+      "created_at": "2026-04-01T10:45:00",
+      "is_read": true
+    },
+    {
+      "message_id": 2,
+      "sender_id": 2,
+      "receiver_id": 1,
+      "subject": "Re: Blood Request",
+      "body": "I can help after 4 PM today. Please confirm the ward details.",
+      "created_at": "2026-04-01T11:05:00",
+      "is_read": false
+    }
+  ],
+  "blood_requests": [
+    {
+      "request_id": 1,
+      "requester_id": 1,
+      "recipient_id": 2,
+      "patient_name": "Meera Joshi",
+      "blood_group": "A+",
+      "units": 2,
+      "hospital": "City General Hospital",
+      "contact_person": "Aarav Mehta",
+      "contact_phone": "9988001122",
+      "reason": "Scheduled surgery",
+      "pincode": "560001",
+      "mode": "direct",
+      "status": "sent",
+      "created_at": "2026-04-01T10:45:00"
+    }
+  ],
+  "blood_drives": [
+    {
+      "drive_id": 1,
+      "name": "Spring Lifeline Drive",
+      "organizer": "Oasis Community",
+      "drive_date": "2026-04-10",
+      "start_time": "09:00:00",
+      "end_time": "14:00:00",
+      "location": "Indiranagar Community Hall",
+      "description": "Walk-in blood drive with free health screening and donor refreshments."
+    },
+    {
+      "drive_id": 2,
+      "name": "Corporate Donor Day",
+      "organizer": "HealthFirst Foundation",
+      "drive_date": "2026-04-18",
+      "start_time": "10:30:00",
+      "end_time": "16:30:00",
+      "location": "Electronic City Convention Center",
+      "description": "Reserved donation slots for office teams with medical staff on site."
+    }
+  ],
+  "emergency_alerts": [
+    {
+      "alert_id": 1,
+      "triggered_by_user_id": 4,
+      "blood_group_needed": "O+",
+      "pincode": "560001",
+      "contact_phone": "9000011111",
+      "created_at": "2026-03-31T20:15:00"
+    }
+  ],
+  "responses": [
+    {
+      "response_id": 1,
+      "user_id": 2,
+      "blood_type_needed": "O+",
+      "created_at": "2026-03-31T20:45:00"
+    }
+  ],
+  "counters": {
+    "admin_id": 2,
+    "user_id": 7,
+    "donor_id": 7,
+    "donation_id": 7,
+    "message_id": 3,
+    "request_id": 2,
+    "drive_id": 3,
+    "alert_id": 2,
+    "response_id": 2
+  }
+}

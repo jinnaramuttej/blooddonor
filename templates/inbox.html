@@ -20,7 +20,7 @@
                     {% for convo in conversations %}
                     <li class="conversation-item animate-on-scroll {% if not convo.is_read and convo.sender_id != session.user_id %}unread{% endif %}">
                         <a href="{{ url_for('conversation_page', other_user_id=convo.user_id) }}">
-                            <img src="{{ url_for('static', filename=convo.profile_picture_url) if convo.profile_picture_url else url_for('static', filename='images/default-avatar.png') }}" alt="Profile picture of {{ convo.username }}" class="profile-img-small">
+                            <img src="{{ url_for('static', filename=convo.profile_picture_url) if convo.profile_picture_url else url_for('static', filename=default_avatar) }}" alt="Profile picture of {{ convo.username }}" class="profile-img-small">
                             <div class="convo-details">
                                 <div class="convo-header">
                                     <h4 class="convo-username">{{ convo.username }}</h4>

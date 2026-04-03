@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard - Oasis{% endblock %}
+
+{% block body_class %}page-dashboard{% endblock %}
+
+{% block content %}
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title"><i class="fas fa-chart-pie"></i> Welcome, {{ user.name or user.username }}</h1>
+                <p class="page-subtitle">Your donor dashboard with quick actions, stats, and recent activity.</p>
+            </div>
+        </section>
+
+        <section class="admin-section">
+            <div class="container">
+                <div class="admin-stats-grid">
+                    <article class="admin-stat-card"><span class="admin-stat-label">Donations</span><strong>{{ stats.donations }}</strong></article>
+                    <article class="admin-stat-card"><span class="admin-stat-label">Conversations</span><strong>{{ stats.messages }}</strong></article>
+                    <article class="admin-stat-card"><span class="admin-stat-label">Unread</span><strong>{{ stats.unread }}</strong></article>
+                    <article class="admin-stat-card"><span class="admin-stat-label">Verified</span><strong>{{ 'Yes' if stats.verified else 'No' }}</strong></article>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-panel">
+                        <h3>Quick Actions</h3>
+                        <div class="dashboard-actions">
+                            <a href="{{ url_for('search_donors_page') }}" class="btn-primary">Find Donors</a>
+                            <a href="{{ url_for('blood_request_page') }}" class="btn-secondary">Request Blood</a>
+                            <a href="{{ url_for('my_profile_page') }}" class="btn-secondary">Edit Profile</a>
+                            <a href="{{ url_for('inbox_page') }}" class="btn-secondary">Open Inbox</a>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-panel">
+                        <h3>Your Donor Snapshot</h3>
+                        <ul class="dashboard-list">
+                            <li><strong>Blood Group:</strong> {{ user.blood_group }}</li>
+                            <li><strong>PIN Code:</strong> {{ user.pincode }}</li>
+                            <li><strong>Contact:</strong> {{ user.contact }}</li>
+                            <li><strong>Status:</strong> {{ user.status|capitalize }}</li>
+                        </ul>
+                    </div>
+
+                    <div class="dashboard-panel">
+                        <h3>Recent Donations</h3>
+                        <ul class="dashboard-list">
+                            {% for donation in recent_donations %}
+                            <li>{{ donation.donation_date.strftime('%b %d, %Y') }} at {{ donation.location }} ({{ donation.units }} unit)</li>
+                            {% else %}
+                            <li>No donations recorded yet.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="dashboard-panel">
+                        <h3>Recent Conversations</h3>
+                        <ul class="dashboard-list">
+                            {% for convo in recent_conversations %}
+                            <li><a href="{{ url_for('conversation_page', other_user_id=convo.user_id) }}">{{ convo.username }}</a> - {{ convo.body|truncate(60) }}</li>
+                            {% else %}
+                            <li>No conversations yet.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="dashboard-panel dashboard-panel-wide">
+                        <h3>Upcoming Blood Drives</h3>
+                        <ul class="dashboard-list">
+                            {% for drive in upcoming_drives %}
+                            <li>{{ drive.drive_date.strftime('%b %d, %Y') }} - {{ drive.name }} at {{ drive.location }}</li>
+                            {% else %}
+                            <li>No upcoming drives scheduled.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}

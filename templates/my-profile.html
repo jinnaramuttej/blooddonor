@@ -21,7 +21,7 @@
                         <div class="form-group profile-picture-group">
                             <label for="profile-picture" class="form-label" style="cursor: pointer;">
                                 <span class="sr-only">Profile Picture</span>
-                                <img id="picture-preview" src="{{ url_for('static', filename=user.profile_picture_url) if user.profile_picture_url else url_for('static', filename='images/default-avatar.png') }}" alt="Profile picture preview" class="profile-img-preview">
+                                <img id="picture-preview" src="{{ url_for('static', filename=user.profile_picture_url) if user.profile_picture_url else url_for('static', filename=default_avatar) }}" alt="Profile picture preview" class="profile-img-preview">
                             </label>
                             <input type="file" id="profile-picture" name="profile-picture" class="form-input sr-only" accept="image/*" disabled>
                         </div>

@@ -1,35 +1,157 @@
 {% extends "layout.html" %}
 
-{% block title %}Admin Panel - Oasis{% endblock %}
+{% block title %}Admin Dashboard - Oasis{% endblock %}
 
 {% block body_class %}page-admin-panel{% endblock %}
 
 {% block content %}
         <section class="page-header">
             <div class="container">
-                <h1 class="page-title"><i class="fas fa-user-shield"></i> Admin Panel</h1>
-                <p class="page-subtitle">Manage users, verify donors, and view platform analytics.</p>
+                <h1 class="page-title"><i class="fas fa-user-shield"></i> Admin Dashboard</h1>
+                <p class="page-subtitle">Local mock control center for users, donors, requests, alerts, and activity.</p>
             </div>
         </section>
 
-        <section id="admin-content-section" class="admin-section">
+        <section class="admin-section">
             <div class="container">
-                <div class="admin-tabs">
-                    <div class="admin-tab active" data-tab="donors">Donor Management</div>
-                    <div class="admin-tab" data-tab="requests">Request Management</div>
-                    <div class="admin-tab" data-tab="reports">Reports</div>
+                <div class="admin-stats-grid">
+                    <article class="admin-stat-card"><span class="admin-stat-label">Users</span><strong>{{ stats.total_users }}</strong></article>
+                    <article class="admin-stat-card"><span class="admin-stat-label">Verified Donors</span><strong>{{ stats.verified_donors }}</strong></article>
+                    <article class="admin-stat-card"><span class="admin-stat-label">Open Requests</span><strong>{{ stats.open_requests }}</strong></article>
+                    <article class="admin-stat-card"><span class="admin-stat-label">Emergency Alerts</span><strong>{{ stats.emergency_alerts }}</strong></article>
+                    <article class="admin-stat-card"><span class="admin-stat-label">Messages</span><strong>{{ stats.messages }}</strong></article>
+                    <article class="admin-stat-card"><span class="admin-stat-label">Responses</span><strong>{{ stats.responses }}</strong></article>
                 </div>
-                <div id="donors-content" class="admin-tab-content active">
-                    <h3>All Donors</h3>
-                    <p>Donor management table will be displayed here.</p>
-                </div>
-                <div id="requests-content" class="admin-tab-content">
-                    <h3>All Blood Requests</h3>
-                    <p>Blood request management table will be displayed here.</p>
-                </div>
-                <div id="reports-content" class="admin-tab-content">
-                    <h3>Platform Analytics</h3>
-                    <p>Analytics and reports will be displayed here.</p>
+
+                <div id="admin-content-section" class="admin-shell">
+                    <div class="admin-tabs">
+                        <div class="admin-tab active" data-tab="users">Users</div>
+                        <div class="admin-tab" data-tab="requests">Requests</div>
+                        <div class="admin-tab" data-tab="alerts">Alerts</div>
+                        <div class="admin-tab" data-tab="admins">Admins</div>
+                    </div>
+
+                    <div id="users-content" class="admin-tab-content active">
+                        <h3>All Users and Donors</h3>
+                        <div class="admin-table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Blood Group</th>
+                                        <th>PIN</th>
+                                        <th>Status</th>
+                                        <th>Verified</th>
+                                        <th>Donations</th>
+                                        <th>Joined</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %}
+                                    <tr>
+                                        <td>{{ user.name or user.username }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.blood_group or 'N/A' }}</td>
+                                        <td>{{ user.pincode or 'N/A' }}</td>
+                                        <td><span class="status status-{{ user.status or 'active' }}">{{ user.status or 'active' }}</span></td>
+                                        <td>{{ 'Yes' if user.verified else 'No' }}</td>
+                                        <td>{{ user.donation_count }}</td>
+                                        <td>{{ user.created_at.strftime('%b %d, %Y') if user.created_at else 'N/A' }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="requests-content" class="admin-tab-content">
+                        <h3>Blood Request Queue</h3>
+                        <div class="admin-table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Patient</th>
+                                        <th>Blood Group</th>
+                                        <th>Requester</th>
+                                        <th>Recipient</th>
+                                        <th>Hospital</th>
+                                        <th>Mode</th>
+                                        <th>Created</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for request_item in requests %}
+                                    <tr>
+                                        <td>{{ request_item.patient_name }}</td>
+                                        <td>{{ request_item.blood_group }}</td>
+                                        <td>{{ request_item.requester_name }}</td>
+                                        <td>{{ request_item.recipient_name }}</td>
+                                        <td>{{ request_item.hospital }}</td>
+                                        <td>{{ request_item.mode }}</td>
+                                        <td>{{ request_item.created_at.strftime('%b %d, %I:%M %p') if request_item.created_at else 'N/A' }}</td>
+                                    </tr>
+                                    {% else %}
+                                    <tr><td colspan="7">No blood requests recorded yet.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="alerts-content" class="admin-tab-content">
+                        <h3>Emergency Alerts</h3>
+                        <div class="admin-table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Triggered By</th>
+                                        <th>Blood Group</th>
+                                        <th>PIN</th>
+                                        <th>Contact Phone</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for alert in alerts %}
+                                    <tr>
+                                        <td>{{ alert.triggered_by_name }}</td>
+                                        <td>{{ alert.blood_group_needed }}</td>
+                                        <td>{{ alert.pincode }}</td>
+                                        <td>{{ alert.contact_phone }}</td>
+                                        <td>{{ alert.created_at.strftime('%b %d, %I:%M %p') if alert.created_at else 'N/A' }}</td>
+                                    </tr>
+                                    {% else %}
+                                    <tr><td colspan="5">No emergency alerts logged yet.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="admins-content" class="admin-tab-content">
+                        <h3>Admin Access</h3>
+                        <div class="admin-table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Last Login</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for admin in admins %}
+                                    <tr>
+                                        <td>{{ admin.name }}</td>
+                                        <td>{{ admin.email }}</td>
+                                        <td>{{ admin.last_login.strftime('%b %d, %I:%M %p') if admin.last_login else 'Never' }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
